@@ -1,0 +1,12 @@
+{
+  "name": "8.-npm",
+  "version": "1.0.0",
+  "description": "Belajar NodeJS",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "author": "Brian Faviansa",
+  "license": "ISC"
+}
