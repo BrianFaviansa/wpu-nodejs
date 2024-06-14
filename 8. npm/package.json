@@ -8,5 +8,8 @@
     "start": "node app.js"
   },
   "author": "Brian Faviansa",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "validator": "^13.12.0"
+  }
 }
