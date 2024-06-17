@@ -14,7 +14,7 @@ if (!fs.existsSync(dataPath)) {
 }
 
 // * ambil semua data di contact.json
-const loadContact = () => {
+const loadContacts = () => {
   const file = fs.readFileSync("data/contacts.json", "utf-8");
   const contacts = JSON.parse(file);
   return contacts;
@@ -22,11 +22,56 @@ const loadContact = () => {
 
 // * ambil contact berdasarkan nama
 const getContactByName = (nama) => {
-  const contacts = loadContact();
+  const contacts = loadContacts();
   const contact = contacts.find(
     (contact) => contact.nama.toLowerCase() === nama.toLowerCase()
   );
   return contact;
 };
 
-module.exports = { loadContact, getContactByName };
+// * menuliskan / menimpa file contacts.json dengan data baru
+const saveContacts = (contacts) => {
+  fs.writeFileSync("data/contacts.json", JSON.stringify(contacts));
+};
+
+// * menambahkan data contact baru ke dalam array
+const createContact = (contact) => {
+  const contacts = loadContacts();
+  contacts.push(contact);
+  saveContacts(contacts);
+};
+
+const cekDuplikat = (nama) => {
+  const contacts = loadContacts();
+  return contacts.find((contact) => contact.nama === nama);
+};
+
+// * hapus contact berdasarkan nama
+const deleteContact = (nama) => {
+  const contacts = loadContacts();
+  const filteredContacts = contacts.filter(
+    (contact) => contact.nama.toLowerCase() !== nama.toLowerCase()
+  );
+  saveContacts(filteredContacts);
+};
+
+// * update contact berdasarkan nama
+const updateContacts = (contactBaru) => {
+  const contacts = loadContacts();
+  const filteredContacts = contacts.filter(
+    (contact) =>
+      contact.nama.toLowerCase() !== contactBaru.oldNama.toLowerCase()
+  );
+  delete contactBaru.oldNama;
+  filteredContacts.push(contactBaru);
+  saveContacts(filteredContacts);
+};
+
+module.exports = {
+  loadContacts,
+  getContactByName,
+  createContact,
+  cekDuplikat,
+  deleteContact,
+  updateContacts,
+};
